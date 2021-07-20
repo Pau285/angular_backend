@@ -1,5 +1,5 @@
-import { checkRole } from './../middlewares/role';
-import { checkJwt } from './../middlewares/jwt';
+import { checkRole } from '../middelware/role';
+import { checkJwt } from '../middelware/jwt';
 import { UserController } from './../controller/UserController';
 import { Router } from 'express';
 
@@ -12,7 +12,7 @@ router.get('/', UserController.getAll);
 router.get('/:id', [checkJwt, checkRole(['admin'])], UserController.getById);
 
 // Create a new user
-router.post('/', [checkJwt, checkRole(['admin'])], UserController.new);
+router.post('/', UserController.new);
 
 // Edit user
 router.patch('/:id', [checkJwt, checkRole(['admin'])], UserController.edit);
