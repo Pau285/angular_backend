@@ -12,11 +12,11 @@ import { SidebarModule } from '@shared/components/sidebar/sidebar.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule} from '@angular/forms';
 import { AdminInterceptor } from '@shared/interceptors/admin-interceptor';
-import { AgregarComponent } from './pages/agregar/agregar.component';
 import { ModificarComponent } from './pages/modificar/modificar.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, FooterComponent, AgregarComponent, ModificarComponent],
+  declarations: [AppComponent, HeaderComponent, FooterComponent, ModificarComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -26,6 +26,7 @@ import { ModificarComponent } from './pages/modificar/modificar.component';
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
+    NgbModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AdminInterceptor, multi: true },

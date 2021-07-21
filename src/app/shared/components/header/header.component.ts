@@ -40,7 +40,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  onToggleSidenav(): void {
+  onToggleSidenav(event: any): void {
+    event.preventDefault();
     this.toggleSidenav.emit();
   }
 

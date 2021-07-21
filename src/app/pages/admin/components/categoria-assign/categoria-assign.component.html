@@ -1,0 +1,84 @@
+<div class="container-fluid">
+  <!-- start page title -->
+  <div class="row">
+    <div class="col-12">
+      <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+        <h2 class="mb-sm-0 font-size-24" style="margin-top: 1em">Asignar Categoria</h2>
+        <div class="page-title-right" style="margin-top: 1em">
+          <ol class="breadcrumb m-0">
+            <li class="breadcrumb-item"><a [routerLink]="['/admin/asignar-categoria']"
+                                           routerLinkActive="active">Productos / Asignar categoria</a>
+            </li>
+          </ol>
+        </div>
+      </div>
+      <!-- end page title-->
+
+      <!-- body page-->
+
+      <div class="card" style="margin-top: 2em;">
+        <div class="card-body">
+          <h3 class="card-title"><b>Listado de Productos sin categoria</b></h3>
+          <p class="card-title-desc">En esta tabla puedes asignar una categoria a todos los <code>[Productos]</code>
+            creados por ti y que actualmente estan <b>Habilitados</b> en el sistema.</p>
+
+          <table class="table" style="margin-top: 7px">
+            <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Marca</th>
+              <th scope="col">Descripción</th>
+              <th scope="col">Stock</th>
+              <th scope="col">Categoria</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let productos of listarProducto; index as i">
+              <td>{{i + 1}}</td>
+              <td>{{productos.nombre}}</td>
+              <td>{{productos.marca}}</td>
+              <td>{{productos.descripcion}}</td>
+              <td>{{productos.stock}}</td>
+
+              <td *ngIf="productos?.categoria">{{productos.categoria.nombre}}</td>
+              <td *ngIf="!productos?.categoria"> No Asignada</td>
+            </tr>
+
+            </tbody>
+          </table>
+          <!-- end body page-->
+
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: 2em;">
+        <div class="card-body">
+          <h3>Asignación de Categoria</h3>
+          <div class="col-md-3">
+            <div class="row">
+              <mat-label>Categorias Habilitadas</mat-label>
+              <mat-select name="categorySelected" [(value)]="categoriaSeleccionada"
+                          placeholder="selecciona la categoria">
+                <mat-option [value]="item"
+                            *ngFor="let item of listaCategorias">{{item.nombre}}</mat-option>
+              </mat-select>
+            </div>
+
+            <div class="row">
+              <div style="margin-top: 2em; margin-bottom: 4em;">
+                <mat-label>Productos sin Asignar</mat-label>
+                <mat-select name="productosList" size="10" placeholder="selecciona la categoria" [(ngModel)]="selProAvailable" multiple>
+                  <mat-option [value]="item"
+                              *ngFor="let item of listarProducto">{{item.nombre}}</mat-option>
+                </mat-select>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="btn btn-primary" (click)="impt()">Guardar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

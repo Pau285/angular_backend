@@ -6,9 +6,9 @@
     "module": "commonjs",
     "target": "es2018",
     "types": [
+      "node",
       "jasmine",
-      "jasminewd2",
-      "node"
+      "jasminewd2"
     ]
   }
 }

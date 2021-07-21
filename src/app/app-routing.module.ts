@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { CheckLoginGuard } from '@shared/guards/check-login.guard';
-import { AgregarComponent } from './pages/agregar/agregar.component';
 import { ModificarComponent } from './pages/modificar/modificar.component';
 const routes: Routes = [
   {
@@ -23,14 +22,15 @@ const routes: Routes = [
       import('./pages/admin/admin.module').then((m) => m.AdminModule),
   },
   {
+    path: 'categorias',
+    loadChildren: () =>
+      import('./pages/categorias/categorias.module').then((m) => m.CategoriasModule),
+  },
+  {
     path: 'login',
     loadChildren: () =>
       import('./pages/auth/login/login.module').then((m) => m.LoginModule),
     canActivate: [CheckLoginGuard],
-  },
-  {
-    path: 'add',
-    component: AgregarComponent,
   },
   {
     path: 'edit',

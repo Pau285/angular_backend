@@ -1,44 +1,66 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid">
-    <a >Productos</a>
+<div class="container-fluid">
+  <!-- start page title -->
+  <div class="row">
+    <div class="col-12">
+      <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+        <h2 class="mb-sm-0 font-size-24" style="margin-top: 1em">Productos</h2>
+        <div class="page-title-right" style="margin-top: 1em">
+          <ol class="breadcrumb m-0">
+            <li class="breadcrumb-item"><a [routerLink]="['/admin']"
+                                           routerLinkActive="active">Productos</a>
+            </li>
+          </ol>
+        </div>
+      </div>
+      <!-- end page title-->
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" routerLink="/add">Agregar</a>
-        </li>
-      </ul>
+      <!-- body page-->
+
+      <div class="card" style="margin-top: 2em;">
+        <div class="card-body">
+          <h3 class="card-title"><b>Listado de Productos Habilitados</b></h3>
+          <p class="card-title-desc">En esta tabla puedes visualizar todos los <code>[Productos]</code> creados por ti y que actualmente estan <b>Habilitados</b> en el sistema.</p>
+          <app-productos-add></app-productos-add>
+          <table class="table" style="margin-top: 7px">
+            <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Marca</th>
+              <th scope="col">Descripción</th>
+              <th scope="col">Stock</th>
+              <th scope="col">Categoria</th>
+              <th scope="col">Editar</th>
+              <th scope="col">Eliminar</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let productos of listarProducto; index as i">
+              <td>{{i + 1}}</td>
+              <td>{{productos.nombre}}</td>
+              <td>{{productos.marca}}</td>
+              <td>{{productos.descripcion}}</td>
+              <td>{{productos.stock}}</td>
+
+              <td *ngIf="productos?.categoria">{{productos.categoria.nombre}}</td>
+              <td *ngIf="!productos?.categoria"> No Asignada</td>
+              <td>
+                <button type="button" class="btn btn-warning">Editar</button>
+              </td>
+              <td>
+                <button type="button" class="btn btn-danger">Eliminar</button>
+              </td>
+            </tr>
+
+            </tbody>
+          </table>
+          <!-- end body page-->
+          <button (click)="openAssignCategory()" type="button" class="btn btn-primary waves-effect waves-light">
+            Asignar Categoria</button>
+
+        </div>
+      </div>
     </div>
   </div>
-</nav>
-
-<table class="table">
-  <thead>
-    <tr>
-      
-      <th scope="col">Nombre</th>
-      <th scope="col">Marca</th>
-      <th scope="col">Descripción</th>
-      <th scope="col">Stock</th>
-      <th scope="col">Editar</th>
-      <th scope="col">Eliminar</th>
-
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let productos of listarProducto">
-     
-      <td>{{productos.nombre}}</td>
-      <td>{{productos.marca}}</td>
-      <td>{{productos.descripcion}}</td>
-      <td>{{productos.stock}}</td>
-      <td>
-        <button type="button" class="btn btn-warning">Editar</button>
-      </td>
-      <td>
-        <button type="button" class="btn btn-danger">Eliminar</button>
-      </td>
-    </tr>
-    
-  </tbody>
-</table>
+</div>

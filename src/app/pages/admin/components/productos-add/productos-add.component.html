@@ -1,0 +1,113 @@
+<button (click)="openModal(content)" type="button" class="btn btn-success waves-effect waves-light">
+  Agregar nuevo Producto</button>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h3 class="modal-title mt-0">Agregar nuevo Producto</h3>
+    <button type="button" class="btn-close" (click)="modal.dismiss()" aria-hidden="true"></button>
+  </div>
+  <div class="modal-body">
+    <form (ngSubmit)="onSubmit()" [formGroup]="postProductForm" class="needs-validation" name="attentionForm"
+          novalidate>
+
+      <ngb-alert *ngIf="successmsg" [dismissible]="false" type="success">Registro completado.
+      </ngb-alert>
+
+      <ngb-alert *ngIf="error" [dismissible]="false" type="danger">{{ error }}</ngb-alert>
+      <!-- nombre Label -->
+      <div class="row">
+        <div class="col-md-8 mt-1">
+          <label class="form-label" for="nombreProducto">Nombre</label>
+
+          <input [ngClass]="{ 'is-invalid': submitted && f.nombreProducto.errors }" class="form-control"
+                 formControlName="nombreProducto"
+                 id="nombreProducto"
+                 type="text" placeholder="Ejemplo: Lápiz pasta"/>
+
+          <div *ngIf="submitted && f.nombreProducto.errors" class="invalid-feedback">
+            <div *ngIf="f.nombreProducto.errors.required">Nombre es requerido</div>
+          </div>
+        </div>
+
+        <div class="col-md-4" style="margin-top: 25px;">
+          <p class="font-size-12"><b>Explicación:</b> Nombre del producto.</p>
+        </div>
+
+      </div>
+      <!-- fin nombre Label -->
+
+      <!-- marca label -->
+      <div class="row">
+        <div class="col-md-8 mt-1">
+          <label class="form-label" for="marcaProducto">Marca</label>
+
+          <input [ngClass]="{ 'is-invalid': submitted && f.marcaProducto.errors }" class="form-control"
+                 formControlName="marcaProducto"
+                 id="marcaProducto"
+                 type="text" placeholder="Ejemplo: Bic"/>
+
+          <div *ngIf="submitted && f.marcaProducto.errors" class="invalid-feedback">
+            <div *ngIf="f.marcaProducto.errors.required">Marca es requerida</div>
+          </div>
+        </div>
+
+        <div class="col-md-4" style="margin-top: 25px;">
+          <p class="font-size-12"><b>Explicación:</b> Marca del producto.</p>
+        </div>
+
+      </div>
+      <!-- fin marca label -->
+
+      <!-- Descripcion textarea -->
+      <div class="row">
+        <div class="col-md-8 mt-1">
+          <label class="form-label" for="descripcionProducto">Descripción</label>
+          <textarea [ngClass]="{ 'is-invalid': submitted && f.descripcionProducto.errors }"
+                    id="descripcionProducto" formControlName="descripcionProducto" class="form-control"
+                    for="descripcionProducto"
+                    placeholder="Ejemplo: color azul">
+
+          </textarea>
+
+
+          <div *ngIf="submitted && f.descripcionProducto.errors" class="invalid-feedback">
+            <div *ngIf="f.descripcionProducto.errors.required">Descripción requerida</div>
+          </div>
+        </div>
+
+        <div class="col-md-4" style="margin-top: 25px;">
+          <p class="font-size-12"><b>Explicación:</b> Descripción del producto.</p>
+        </div>
+
+      </div>
+      <!-- End Descripcion textarea -->
+
+      <!-- stock label -->
+      <div class="row">
+        <div class="col-md-8 mt-1">
+          <label class="form-label" for="stockProducto">Stock</label>
+
+          <input [ngClass]="{ 'is-invalid': submitted && f.stockProducto.errors }" class="form-control"
+                 formControlName="stockProducto"
+                 id="stockProducto"
+                 type="number" placeholder="Ejemplo: 12"/>
+
+          <div *ngIf="submitted && f.stockProducto.errors" class="invalid-feedback">
+            <div *ngIf="f.stockProducto.errors.required">Stock es requerido</div>
+          </div>
+        </div>
+
+        <div class="col-md-4" style="margin-top: 25px;">
+          <p class="font-size-12"><b>Explicación:</b> Cantidad disponible del producto.</p>
+        </div>
+
+      </div>
+      <!-- fin stock label -->
+
+      <div class="mt-4 d-grid">
+        <button class="btn btn-primary" type="submit">Guardar</button>
+      </div>
+
+    </form>
+  </div>
+</ng-template>

@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient} from '@angular/common/http';
-import { environment } from '@env/environment';
+import { environment } from '../../../../environments/environment';
+import {Categorias} from '../../../../../angular_backend/src/entity/categorias';
 @Injectable({
   providedIn: 'root'
 })
 export class ProductosService {
-  
+
   constructor(private http:HttpClient) { }
 
   //obtener productos
@@ -16,27 +17,30 @@ export class ProductosService {
   // obtener un Producto
 
   getUnProducto(id:number){
-    return this.http.get(`${environment.API_URL}/productos`+'/'+id);
+    return this.http.get(`${environment.API_URL}/productos/${id}`);
   }
 
-  // agregar Producto 
- 
-  addProducto(producto:Producto){
+  // agregar Producto
+
+  addProducto(producto: JSON){
   return this.http.post(`${environment.API_URL}/productos`, producto);
   }
 
-  // eliminar Producto 
+  // eliminar Producto
 
   deleteProducto(id:number){
-    return this.http.delete(`${environment.API_URL}/productos`+'/'+id);
+    return this.http.delete(`${environment.API_URL}/productos/${id}`);
   }
 
   //editar Producto
 
   editProducto(id:number, equipo:Producto){
-    return this.http.put(`${environment.API_URL}/productos`+'/'+id, equipo)
+    return this.http.put(`${environment.API_URL}/productos/${id}`, equipo);
   }
 
+  assignCategory(id: number, category: JSON){
+    return this.http.put(`${environment.API_URL}/productos/${id}/assignCategory`, category);
+  }
 }
 
 export interface Producto{
@@ -44,5 +48,6 @@ export interface Producto{
   nombre:string,
   marca:string,
   descripcion:string,
-  stock:number;
+  stock:number,
+  categoria: Categorias
 }

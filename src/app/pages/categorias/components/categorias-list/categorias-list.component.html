@@ -1,0 +1,58 @@
+<div class="container-fluid">
+  <!-- start page title -->
+  <div class="row">
+    <div class="col-12">
+      <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+        <h2 class="mb-sm-0 font-size-24" style="margin-top: 1em">Categorías</h2>
+        <div class="page-title-right" style="margin-top: 1em">
+          <ol class="breadcrumb m-0">
+            <li class="breadcrumb-item"><a [routerLink]="['/categorias']"
+                                           routerLinkActive="active">Categorías</a>
+            </li>
+          </ol>
+        </div>
+      </div>
+      <!-- end page title-->
+
+      <!-- body page-->
+
+      <div class="card" style="margin-top: 2em;">
+        <div class="card-body">
+          <h3 class="card-title"><b>Listado de Categorias Habilitadas</b></h3>
+          <p class="card-title-desc">En esta tabla puedes visualizar todas las <code>[Categorias]</code> creadas por ti y que actualmente estan <b>Habilitadas</b> en el sistema.</p>
+
+          <table class="table" style="margin-top: 7px">
+            <thead>
+            <tr>
+
+              <th scope="col">Nombre</th>
+              <th scope="col">Descripción</th>
+              <th scope="col">Editar</th>
+              <th scope="col">Eliminar</th>
+
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let categorias of listaCategorias">
+
+              <td>{{categorias.nombre}}</td>
+              <td>{{categorias.descripcion}}</td>
+              <td>
+                <button type="button" class="btn btn-warning">Editar</button>
+              </td>
+              <td>
+                <button type="button" class="btn btn-danger">Eliminar</button>
+              </td>
+            </tr>
+
+            </tbody>
+          </table>
+          <!-- end body page-->
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
