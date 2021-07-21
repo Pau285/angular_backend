@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {ProductosService, Producto
+} from '../agregar/productos.service'
 
 @Component({
   selector: 'app-admin',
@@ -7,9 +9,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminComponent implements OnInit {
 
-  constructor() { }
+  // variable
+  listarProducto: Producto[];
+  constructor(private ProductosService:ProductosService) { }
 
   ngOnInit(): void {
+    this.listarProductos();
+  }
+
+  listarProductos(){
+    this.ProductosService.getProductos().subscribe(
+      res=>{
+        console.log(res);
+        this.listarProducto=<any>res;
+      },
+      err =>console.log(err)
+    );
   }
 
 }
