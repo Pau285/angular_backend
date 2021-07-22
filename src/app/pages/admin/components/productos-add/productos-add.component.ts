@@ -49,7 +49,7 @@ export class ProductosAddComponent implements OnInit {
       this.modalService.dismissAll();
       Swal.fire({
         title: "Excelente!",
-        text: "Categoría agregada satisfactoriamente!",
+        text: "Producto agregado satisfactoriamente!",
         icon: "success"
       }).then(function (){
         window.location.href= "/admin";

@@ -16,9 +16,19 @@ export class AdminComponent implements OnInit {
   constructor(private ProductosService: ProductosService, private router: Router) { }
 
   ngOnInit(): void {
-    this.ProductosService.getProductosDeactivated().subscribe(data =>(this.ProductosDeshabilitados = data));
-    this.ProductosService.getProductos().subscribe(data => (this.listarProducto = data));
+    this.listarProductos();
   }
+
+  listarProductos(): void{
+    this.ProductosService.getProductos().subscribe(
+      res => {
+        console.log(res);
+        this.listarProducto = (res as any);
+      },
+      err => console.log(err)
+    );
+  }
+
 
   openAssignCategory(): void {
     this.router.navigate(['/admin/asignarcategoria']);

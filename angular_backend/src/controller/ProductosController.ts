@@ -1,4 +1,4 @@
-import {createQueryBuilder, getRepository} from 'typeorm';
+import {getRepository} from 'typeorm';
 import {Request, Response} from 'express';
 import {Productos} from '../entity/Productos';
 import {validate} from 'class-validator';
@@ -9,13 +9,10 @@ export class ProductosController {
 
   static getAll = async (req: Request, res: Response) => {
     const productosRepository = getRepository(Productos);
-    let productos;
+    let productos: Productos[];
 
     try {
-      productos = await productosRepository.find({select: ['id', 'nombre', 'marca', 'descripcion', 'stock'],
-      where:{
-        state:'Habilitado'
-      }});
+      productos = await productosRepository.find({select: ['id', 'nombre', 'marca', 'descripcion', 'stock' , 'state']});
     } catch (e) {
       res.status(404).json({message: 'Somenthing goes wrong!'});
     }
@@ -26,26 +23,6 @@ export class ProductosController {
       res.status(404).json({message: 'Not result'});
     }
   }
-  static getAllDeactivated = async (req: Request, res: Response) => {
-    const productosRepository = getRepository(Productos);
-    let productos;
-
-    try {
-      productos = await productosRepository.find({select: ['id', 'nombre', 'marca', 'descripcion', 'stock'],
-        where:{
-          state:'Deshabilitado'
-        }});
-    } catch (e) {
-      res.status(404).json({message: 'Somenthing goes wrong!'});
-    }
-
-    if (productos.length > 0) {
-      res.send(productos);
-    } else {
-      res.status(404).json({message: 'Not result'});
-    }
-  }
-
 
   static getById = async (req: Request, res: Response) => {
     const {id} = req.params;

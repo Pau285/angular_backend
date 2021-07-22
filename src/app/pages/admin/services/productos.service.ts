@@ -12,13 +12,10 @@ export class ProductosService {
 
   //obtener productos
 
-  getProductos(): Observable<Producto[]>{
-    return this.http.get<Producto[]>(`${environment.API_URL}/productos`);
+  getProductos(){
+    return this.http.get(`${environment.API_URL}/productos/`);
   }
 
-  getProductosDeactivated(): Observable<Producto[]>{
-    return this.http.get<Producto[]>(`${environment.API_URL}/productos/alld`);
-  }
   // obtener un Producto
 
   getUnProducto(id:number){
