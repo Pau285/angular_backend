@@ -20,7 +20,8 @@
         <div class="card-body">
           <h3 class="card-title"><b>Listado de Productos Habilitados</b></h3>
           <p class="card-title-desc">En esta tabla puedes visualizar todos los <code>[Productos]</code> creados por ti y que actualmente estan <b>Habilitados</b> en el sistema.</p>
-          <app-productos-add></app-productos-add>
+          <app-productos-add></app-productos-add> <button (click)="openAssignCategory()" style="margin-left: 10px;" type="button" class="btn btn-primary waves-effect waves-light">
+          Asignar Categoria</button>
           <table class="table" style="margin-top: 7px">
             <thead>
             <tr>
@@ -49,15 +50,47 @@
                 <button type="button" class="btn btn-warning">Editar</button>
               </td>
               <td>
-                <button type="button" class="btn btn-danger">Eliminar</button>
+                <button type="button" (click)="confirmDelete(productos.id)" class="btn btn-danger">Eliminar</button>
               </td>
             </tr>
 
             </tbody>
           </table>
           <!-- end body page-->
-          <button (click)="openAssignCategory()" type="button" class="btn btn-primary waves-effect waves-light">
-            Asignar Categoria</button>
+
+
+          <h3 class="card-title"><b>Listado de Productos Deshabilitados</b></h3>
+          <p class="card-title-desc">En esta tabla puedes visualizar todos los <code>[Productos]</code> creados por ti y que actualmente estan <b>Deshabilitados</b> en el sistema.</p>
+          <table class="table" style="margin-top: 7px">
+            <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Marca</th>
+              <th scope="col">Descripción</th>
+              <th scope="col">Stock</th>
+              <th scope="col">Categoria</th>
+              <th scope="col">Activar</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let productos of ProductosDeshabilitados; index as i">
+              <td>{{i + 1}}</td>
+              <td>{{productos.nombre}}</td>
+              <td>{{productos.marca}}</td>
+              <td>{{productos.descripcion}}</td>
+              <td>{{productos.stock}}</td>
+
+              <td *ngIf="productos?.categoria">{{productos.categoria.nombre}}</td>
+              <td *ngIf="!productos?.categoria"> No Asignada</td>
+              <td>
+                <button type="button" (click)="confirmActivate(productos.id)" class="btn btn-info">Activar</button>
+              </td>
+            </tr>
+
+            </tbody>
+          </table>
 
         </div>
       </div>

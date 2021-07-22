@@ -1,4 +1,4 @@
-import {getRepository} from 'typeorm';
+import {createQueryBuilder, getRepository} from 'typeorm';
 import {Request, Response} from 'express';
 import {Productos} from '../entity/Productos';
 import {validate} from 'class-validator';
@@ -12,7 +12,10 @@ export class ProductosController {
     let productos;
 
     try {
-      productos = await productosRepository.find({select: ['id', 'nombre', 'marca', 'descripcion', 'stock']});
+      productos = await productosRepository.find({select: ['id', 'nombre', 'marca', 'descripcion', 'stock'],
+      where:{
+        state:'Habilitado'
+      }});
     } catch (e) {
       res.status(404).json({message: 'Somenthing goes wrong!'});
     }
@@ -23,6 +26,26 @@ export class ProductosController {
       res.status(404).json({message: 'Not result'});
     }
   }
+  static getAllDeactivated = async (req: Request, res: Response) => {
+    const productosRepository = getRepository(Productos);
+    let productos;
+
+    try {
+      productos = await productosRepository.find({select: ['id', 'nombre', 'marca', 'descripcion', 'stock'],
+        where:{
+          state:'Deshabilitado'
+        }});
+    } catch (e) {
+      res.status(404).json({message: 'Somenthing goes wrong!'});
+    }
+
+    if (productos.length > 0) {
+      res.send(productos);
+    } else {
+      res.status(404).json({message: 'Not result'});
+    }
+  }
+
 
   static getById = async (req: Request, res: Response) => {
     const {id} = req.params;
@@ -108,9 +131,9 @@ export class ProductosController {
     } catch (e) {
       return res.status(404).json({message: 'Producto no encontrado'});
     }
-
+    productos.state = 'Deshabilitado';
+    await productosRepository.save(productos);
     // Remove user
-    productosRepository.softDelete(id);
     res.status(201).json({message: ' Producto eliminado'});
   }
 
@@ -118,14 +141,14 @@ export class ProductosController {
     let producto;
     const {id} = req.params;
     const {idDetalleProductos, nombre, descripcion} = req.body;
-    const categoria = new Categorias();
+    const categoriaNueva = new Categorias();
     const productosRepository = getRepository(Productos);
     try {
-      categoria.idDetalleProductos = idDetalleProductos;
-      categoria.nombre = nombre;
-      categoria.descripcion = descripcion;
+      categoriaNueva.idDetalleProductos = idDetalleProductos;
+      categoriaNueva.nombre = nombre;
+      categoriaNueva.descripcion = descripcion;
       producto = await productosRepository.findOneOrFail(id);
-      producto.categoria = categoria;
+      producto.categoria = categoriaNueva;
     } catch (e) {
       return res.status(404).json({message: 'Producto no encontrado'});
     }
@@ -139,15 +162,21 @@ export class ProductosController {
 
   }
 
-  static getCategory = async (req: Request, res: Response) => {
+  static activateProducto = async (req: Request, res: Response) => {
     const {id} = req.params;
     const productosRepository = getRepository(Productos);
-    try{
-        const producto = await productosRepository.findOneOrFail(id);
-        res.send(producto.categoria);
-    }catch (e){
+    let deshabilitado: Productos;
+
+    try {
+      deshabilitado = await productosRepository.findOneOrFail(id);
+    } catch (e) {
       return res.status(404).json({message: 'Producto no encontrado'});
     }
+    deshabilitado.state = 'Habilitado';
+
+    await productosRepository.save(deshabilitado);
+    // Remove user
+    res.status(201).json({message: ' Producto activado'});
   }
 
 }

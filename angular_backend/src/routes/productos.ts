@@ -6,20 +6,26 @@ const router = Router();
 // Get all users
 router.get('/', ProductosController.getAll);
 
+router.get('/alld', ProductosController.getAllDeactivated);
+
 // Get one user
 router.get('/:id', ProductosController.getById);
 
 // Get Category
-router.get('/:id/category', ProductosController.getCategory);
 
 // Assign Category
 router.put('/:id/assignCategory', ProductosController.assignCategory);
+
+
+router.put('/:id/activate', ProductosController.activateProducto);
+
 
 // Create a new user
 router.post('/', ProductosController.new);
 
 // Edit user
 router.patch('/:id',  ProductosController.edit);
+
 
 // Delete
 router.delete('/:id', ProductosController.delete);

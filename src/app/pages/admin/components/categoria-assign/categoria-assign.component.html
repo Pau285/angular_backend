@@ -35,15 +35,15 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let productos of listarProducto; index as i">
+
+            <tr *ngFor="let productos of listarProducto; index as i" >
               <td>{{i + 1}}</td>
               <td>{{productos.nombre}}</td>
               <td>{{productos.marca}}</td>
               <td>{{productos.descripcion}}</td>
               <td>{{productos.stock}}</td>
-
-              <td *ngIf="productos?.categoria">{{productos.categoria.nombre}}</td>
-              <td *ngIf="!productos?.categoria"> No Asignada</td>
+              <td *ngIf="productos?.categoria?.nombre">{{productos.categoria.nombre}}</td>
+              <td *ngIf="!productos?.categoria?.nombre"> No Asignada</td>
             </tr>
 
             </tbody>
