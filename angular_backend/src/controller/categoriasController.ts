@@ -2,26 +2,30 @@ import {getRepository} from 'typeorm';
 import {json, Request, Response} from 'express';
 import {Categorias} from '../entity/categorias';
 import {validate} from 'class-validator';
-import {Productos} from '../entity/Productos';
 
 export class categoriasController {
-  // Obtener todas las categorias habilitadas
+  // Obtener todas las categorias habilitadas con createQueryBuilder
   static getAllActivated = async (req: Request, res: Response) => {
-    const categoriasRepository = getRepository(Categorias);
     try {
-      const categorias = await categoriasRepository.find({
-        where: {
-          state: 'Habilitado'
-        }
-      });
-      if (categorias.length > 0) {
-        res.send(categorias);
-      } else {
-        res.status(404).json({message: 'not results'});
+      const categorias = await getRepository(Categorias)
+        .createQueryBuilder('categorias')
+        .select('idDetalleProductos')
+        .addSelect('nombre')
+        .addSelect('descripcion')
+        .addSelect('createAt')
+        .addSelect('updateAt')
+        .addSelect('state')
+        .where("state = 'Habilitado'")
+        .getRawMany();
+      if(!!categorias){
+        res.status(200).send(categorias);
+      }else{
+        res.status(404).send('Not found');
       }
-    } catch (error) {
+    }catch(error){
       res.status(500).json({error});
     }
+
   }
   // Obtener todas las categorias deshabilitadas
   static getAllDeactivated = async (req: Request, res: Response) => {

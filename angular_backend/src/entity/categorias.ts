@@ -5,7 +5,7 @@ import {
   Unique,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToMany,
+  OneToMany, Timestamp,
 } from 'typeorm';
 import {MinLength, MaxLength} from 'class-validator';
 import {Productos} from '../entity/Productos';
@@ -27,11 +27,11 @@ export class Categorias {
 
   @Column()
   @CreateDateColumn()
-  createAt: Date;
+  createAt: Timestamp;
 
   @Column()
   @UpdateDateColumn()
-  updateAt: Date;
+  updateAt: Timestamp;
 
   @Column()
   @MaxLength(13)
@@ -39,4 +39,6 @@ export class Categorias {
 
   @OneToMany(type => Productos, productos => productos.categoria)
   productos: Productos[];
+
+
 }
