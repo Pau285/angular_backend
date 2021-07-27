@@ -13,7 +13,11 @@ export class ProductosService {
   //obtener productos
 
   getProductos(){
-    return this.http.get(`${environment.API_URL}/productos/`);
+    return this.http.get<Object[]>(`${environment.API_URL}/productos/`);
+  }
+
+  getProductosCategoriesNull(){
+    return this.http.get<Object[]>(`${environment.API_URL}/productos/listNull`);
   }
 
   // obtener un Producto

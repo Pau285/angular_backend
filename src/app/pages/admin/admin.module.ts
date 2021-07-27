@@ -10,9 +10,10 @@ import { ProductosAddComponent } from './components/productos-add/productos-add.
 import { ProductosUpdateComponent } from './components/productos-update/productos-update.component';
 import {NgbAlertModule} from '@ng-bootstrap/ng-bootstrap';
 import { CategoriaAssignComponent } from './components/categoria-assign/categoria-assign.component';
+import { ProductosListCategoriasComponent } from './components/productos-list-categorias/productos-list-categorias.component';
 
 @NgModule({
-  declarations: [AdminComponent, ModalComponent, ProductosAddComponent, ProductosUpdateComponent, CategoriaAssignComponent],
+  declarations: [AdminComponent, ModalComponent, ProductosAddComponent, ProductosUpdateComponent, CategoriaAssignComponent, ProductosListCategoriasComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,

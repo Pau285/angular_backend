@@ -1,6 +1,7 @@
 import {getRepository} from 'typeorm';
-import {json, Request, Response} from 'express';
+import {Request, Response} from 'express';
 import {Categorias} from '../entity/categorias';
+import {Productos} from '../entity/Productos';
 import {validate} from 'class-validator';
 
 export class categoriasController {
@@ -27,21 +28,45 @@ export class categoriasController {
     }
 
   }
+
+  static getAllProducts = async (req: Request, res: Response) =>{
+    const {id} = req.params;
+    try{
+      const categoryRepo = await getRepository(Categorias)
+        .createQueryBuilder('categorias')
+        .innerJoinAndSelect(Productos, 'p','p.categoriaIdDetalleProductos = categorias.idDetalleProductos')
+        .where("categorias.idDetalleProductos = :idDetalleProductos", {idDetalleProductos: id})
+        .select(['p.id', 'p.nombre', 'p.marca', 'p.descripcion', 'p.stock', 'p.state','categorias.nombre'])
+        .getRawMany();
+      if(!!categoryRepo){
+        res.status(200).send(categoryRepo);
+      }else{
+        res.status(404).send('Not Found');
+      }
+    }catch(error){
+      res.status(500).send(`GetAllProducts: ${error}`);
+    }
+  }
+
   // Obtener todas las categorias deshabilitadas
   static getAllDeactivated = async (req: Request, res: Response) => {
-    const categoriasRepository = getRepository(Categorias);
     try {
-      const categorias = await categoriasRepository.find({
-        where: {
-          state: 'Deshabilitado'
-        }
-      });
-      if (categorias.length > 0) {
-        res.send(categorias);
-      } else {
-        res.status(404).json({message: 'not results'});
+      const categorias = await getRepository(Categorias)
+        .createQueryBuilder('categorias')
+        .select('idDetalleProductos')
+        .addSelect('nombre')
+        .addSelect('descripcion')
+        .addSelect('createAt')
+        .addSelect('updateAt')
+        .addSelect('state')
+        .where("state = 'Deshabilitado'")
+        .getRawMany();
+      if(!!categorias){
+        res.status(200).send(categorias);
+      }else{
+        res.status(404).send('Not found');
       }
-    } catch (error) {
+    }catch(error){
       res.status(500).json({error});
     }
   }
@@ -82,12 +107,12 @@ export class categoriasController {
   }
   static assignProductos = async (req: Request, res: Response) => {
     const {id} = req.params;
-    const {cadena} = req.body;
+    const {productos} = req.body;
     const categoriasRepository = getRepository(Categorias);
     let categorias;
     try {
       categorias = await categoriasRepository.findOneOrFail(id);
-      categorias.productos = cadena;
+      categorias.productos = productos;
       await categoriasRepository.save(categorias);
       res.status(201).json({message: 'Categoria update OK'});
     } catch (error) {

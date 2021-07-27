@@ -13,6 +13,9 @@ export class CategoriasService {
   };
   constructor(private http: HttpClient) { }
 
+  getAllProducts(data) {
+    return this.http.get<Object[]>(`${environment.API_URL}/categorias/${data}/allProducts`);
+  }
   getCategoriasActivadas() {
     return this.http.get<Categorias[]>(`${environment.API_URL}/categorias/listActivated`);
   }

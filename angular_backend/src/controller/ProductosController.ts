@@ -8,19 +8,38 @@ import {Categorias} from '../entity/categorias';
 export class ProductosController {
 
   static getAll = async (req: Request, res: Response) => {
-    const productosRepository = getRepository(Productos);
-    let productos: Productos[];
-
     try {
-      productos = await productosRepository.find({select: ['id', 'nombre', 'marca', 'descripcion', 'stock' , 'state']});
-    } catch (e) {
-      res.status(404).json({message: 'Somenthing goes wrong!'});
+    const productosRepo = await getRepository(Productos)
+      .createQueryBuilder('productos')
+      .innerJoinAndSelect(Categorias,'c','c.idDetalleProductos = productos.categoriaIdDetalleProductos')
+      .select(['productos.id', 'productos.nombre', 'productos.marca', 'productos.descripcion', 'productos.stock', 'productos.state','c.nombre'])
+      .where("productos.state = 'Habilitado'")
+      .getRawMany();
+    if(!!productosRepo){
+      res.status(200).send(productosRepo);
+    }else{
+      res.status(404).send('Not found');
     }
+    } catch (e) {
+      res.status(500).json({message: 'Somenthing goes wrong!'});
+    }
+  }
 
-    if (productos.length > 0) {
-      res.send(productos);
-    } else {
-      res.status(404).json({message: 'Not result'});
+  static getAllCategoriesNull = async (req: Request, res: Response) => {
+    try {
+      const productosRepo = await getRepository(Productos)
+        .createQueryBuilder('productos')
+        .select(['productos.id', 'productos.nombre', 'productos.marca', 'productos.descripcion', 'productos.stock', 'productos.state'])
+        .where('productos.categoriaIdDetalleProductos is null')
+        .andWhere("productos.state = 'Habilitado'")
+        .getRawMany();
+      if(!!productosRepo){
+        res.status(200).send(productosRepo);
+      }else{
+        res.status(404).send('Not found');
+      }
+    } catch (e) {
+      res.status(500).json({message: 'Somenthing goes wrong!'});
     }
   }
 

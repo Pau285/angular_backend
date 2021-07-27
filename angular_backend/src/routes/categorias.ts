@@ -7,6 +7,8 @@ const router = Router();
 router.get('/listActivated', categoriasController.getAllActivated);
 // Obtener todas las categorias desactivadas
 router.get('/listDeactivated', categoriasController.getAllDeactivated);
+
+router.get('/:id/allProducts', categoriasController.getAllProducts);
 // Obtener una categoria
 router.get('/:id', categoriasController.getById);
 // Crear una nueva categoria

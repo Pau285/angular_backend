@@ -1,0 +1,31 @@
+    <h3 class="card-title"><b>Listado de Productos por Categoria</b></h3>
+    <p class="card-title-desc">En esta tabla puedes visualizar todos los <code>[Productos]</code> asociados a una categoria en el sistema.
+    para visualizar los productos debe seleccionar una <code>Categoria</code>.</p>
+    <div class="row"><div *ngFor="let categorias of listarCategorias"><button class="btn btn-secondary" (click)="listByCategories(categorias.idDetalleProductos)">{{categorias.nombre}}</button></div></div>
+    <table class="table" style="margin-top: 7px" name="tableActive">
+      <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Marca</th>
+        <th scope="col">Descripción</th>
+        <th scope="col">Stock</th>
+        <th scope="col">Categoria</th>
+        <th scope="col">Estado</th>
+
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let productos of listarProducto; index as i">
+        <td>{{i + 1}}</td>
+        <td>{{productos.p_nombre}}</td>
+        <td>{{productos.p_marca}}</td>
+        <td>{{productos.p_descripcion}}</td>
+        <td>{{productos.p_stock}}</td>
+        <td>{{productos.categorias_nombre}}</td>
+        <td>{{productos.p_state}}</td>
+      </tr>
+
+      </tbody>
+    </table>
+    <!-- end body page-->

@@ -10,41 +10,45 @@ import Swal from 'sweetalert2';
   styleUrls: ['./categoria-assign.component.scss']
 })
 export class CategoriaAssignComponent implements OnInit {
-  listarProducto: Producto[];
-  selProAvailable: Producto[];
+  listarNoAsignado: Object[];
+  productoSeleccionado: Object[];
   categoria: Categorias;
   categoriaSeleccionada: Categorias;
 
   listaCategorias: Categorias[];
 
-  constructor(private ProductosService: ProductosService, private categoriasService: CategoriasService) {
+
+  constructor(private ProductosService: ProductosService,
+              private categoriasService: CategoriasService) {
   }
 
   ngOnInit(): void {
-
-    this.ProductosService.getProductos().subscribe(res => (this.listarProducto = <any> res));
+    this.ProductosService.getProductosCategoriesNull().subscribe( data => {this.listarNoAsignado = data});
     this.categoriasService.getCategoriasActivadas().subscribe(data => (this.listaCategorias = data));
   }
 
 
   impt() {
     this.categoriasService.assignProductos(this.categoriaSeleccionada.idDetalleProductos,
-      JSON.parse(JSON.stringify(this.selProAvailable))).subscribe();
+      JSON.parse(JSON.stringify(this.productoSeleccionado))).subscribe( data =>{
+
+    }, error =>{
+
+    });
     this.asignarCategoria();
     Swal.fire({
       title: "Excelente!",
       text: "Asignación de categoria exitosa!",
       icon: "success"
     }).then(function (){
-      //window.location.href= "/admin/asignarcategoria";
+      window.location.href= "/admin/asignarcategoria";
     });
-    console.log(JSON.parse(JSON.stringify(this.listarProducto)));
   }
 
   asignarCategoria() {
 
-    for (let i = 0; i < this.selProAvailable.length; i++) {
-      this.ProductosService.assignCategory(this.selProAvailable[i].id,
+    for (let i = 0; i < this.productoSeleccionado.length; i++) {
+      this.ProductosService.assignCategory(this.productoSeleccionado[i].productos_id,
         JSON.parse(JSON.stringify(this.categoriaSeleccionada))).subscribe();
     }
   }

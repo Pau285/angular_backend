@@ -6,6 +6,8 @@ const router = Router();
 // Get all users
 router.get('/', ProductosController.getAll);
 
+router.get('/listNull', ProductosController.getAllCategoriesNull);
+
 // Get one user
 router.get('/:id', ProductosController.getById);
 

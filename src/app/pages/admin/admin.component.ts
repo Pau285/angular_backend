@@ -9,9 +9,7 @@ import Swal from 'sweetalert2';
 })
 export class AdminComponent implements OnInit {
 
-  // variable
-  ProductosDeshabilitados: Producto[];
-  listarProducto: Producto[];
+  listarProducto: Object[];
 
   constructor(private ProductosService: ProductosService, private router: Router) { }
 
@@ -22,7 +20,6 @@ export class AdminComponent implements OnInit {
   listarProductos(): void{
     this.ProductosService.getProductos().subscribe(
       res => {
-        console.log(res);
         this.listarProducto = (res as any);
       },
       err => console.log(err)

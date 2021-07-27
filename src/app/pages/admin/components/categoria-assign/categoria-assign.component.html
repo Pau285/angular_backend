@@ -36,14 +36,13 @@
             </thead>
             <tbody>
 
-            <tr *ngFor="let productos of listarProducto; index as i" >
+            <tr *ngFor="let productos of listarNoAsignado; index as i" >
               <td>{{i + 1}}</td>
-              <td>{{productos.nombre}}</td>
-              <td>{{productos.marca}}</td>
-              <td>{{productos.descripcion}}</td>
-              <td>{{productos.stock}}</td>
-              <td *ngIf="productos?.categoria?.nombre">{{productos.categoria.nombre}}</td>
-              <td *ngIf="!productos?.categoria?.nombre"> No Asignada</td>
+              <td>{{productos.productos_nombre}}</td>
+              <td>{{productos.productos_marca}}</td>
+              <td>{{productos.productos_descripcion}}</td>
+              <td>{{productos.productos_stock}}</td>
+              <td> No Asignada</td>
             </tr>
 
             </tbody>
@@ -69,9 +68,9 @@
             <div class="row">
               <div style="margin-top: 2em; margin-bottom: 4em;">
                 <mat-label>Productos sin Asignar</mat-label>
-                <mat-select name="productosList" size="10" placeholder="selecciona la categoria" [(ngModel)]="selProAvailable" multiple>
+                <mat-select name="productosList" size="10" placeholder="selecciona la categoria" [(ngModel)]="productoSeleccionado" multiple>
                   <mat-option [value]="item"
-                              *ngFor="let item of listarProducto">{{item.nombre}}</mat-option>
+                              *ngFor="let item of listarNoAsignado">{{item.productos_nombre}}</mat-option>
                 </mat-select>
               </div>
             </div>
