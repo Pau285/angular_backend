@@ -1,0 +1,33 @@
+<button (click)="openModal(content)" type="button" class="btn btn-info waves-effect waves-light">
+  QR</button>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h3 class="modal-title mt-0">Visualización de código QR</h3>
+    <button type="button" class="btn-close" (click)="modal.dismiss()" aria-hidden="true"></button>
+  </div>
+  <div class="modal-body">
+    <div class="text-center">
+      <div class="row">
+        <p>Aqui se muestra el contenido del código <code>QR</code> generado:</p>
+      </div>
+      <div class="row">
+        <label><b>Nombre:</b> {{data.p_nombre}}</label>
+      </div>
+      <div class="row">
+        <label><b>Descripción:</b> {{data.p_descripcion}}</label>
+      </div>
+      <div class="row">
+        <label><b>Marca:</b> {{data.p_marca}}</label>
+      </div>
+      <div class="row">
+        <label><b>Stock:</b> {{data.p_stock}}</label>
+      </div>
+    <ngx-qrcode
+      [elementType] = "elementType"
+      [errorCorrectionLevel]="errorCorrectionLevel"
+      [value]="value"
+    ></ngx-qrcode>
+  </div>
+  </div>
+</ng-template>

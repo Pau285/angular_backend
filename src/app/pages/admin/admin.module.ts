@@ -11,15 +11,18 @@ import { ProductosUpdateComponent } from './components/productos-update/producto
 import {NgbAlertModule} from '@ng-bootstrap/ng-bootstrap';
 import { CategoriaAssignComponent } from './components/categoria-assign/categoria-assign.component';
 import { ProductosListCategoriasComponent } from './components/productos-list-categorias/productos-list-categorias.component';
+import {NgxQRCodeModule} from '@techiediaries/ngx-qrcode';
+import { ModalQrComponent } from './components/productos-list-categorias/components/modal-qr/modal-qr.component';
 
 @NgModule({
-  declarations: [AdminComponent, ModalComponent, ProductosAddComponent, ProductosUpdateComponent, CategoriaAssignComponent, ProductosListCategoriasComponent],
+  declarations: [AdminComponent, ModalComponent, ProductosAddComponent, ProductosUpdateComponent, CategoriaAssignComponent, ProductosListCategoriasComponent, ModalQrComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,
     MaterialModule,
     ReactiveFormsModule,
     NgbAlertModule,
+    NgxQRCodeModule,
     FormsModule,
   ],
 })

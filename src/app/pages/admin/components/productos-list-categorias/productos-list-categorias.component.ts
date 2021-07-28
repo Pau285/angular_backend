@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {Categorias} from '../../../../../../angular_backend/src/entity/categorias';
 import {CategoriasService} from '@admin/categorias/components/categorias-list/services/categorias.service';
+import {ProductosService} from '@admin/admin/services/productos.service';
+import {Productos} from '../../../../../../angular_backend/src/entity/Productos';
 
 @Component({
   selector: 'app-productos-list-categorias',
@@ -11,7 +13,7 @@ export class ProductosListCategoriasComponent implements OnInit {
   listarProducto: Object[];
   listarCategorias: Categorias[];
   categoria: number;
-  constructor(private categoriasService: CategoriasService) { }
+  constructor(private categoriasService: CategoriasService, private productosService: ProductosService) { }
 
   ngOnInit(): void {
     this.categoriasService.getCategoriasActivadas().subscribe(data => {
@@ -33,4 +35,5 @@ export class ProductosListCategoriasComponent implements OnInit {
         console.log(`getAllProducts: ${error}`);
       });
   }
+
 }

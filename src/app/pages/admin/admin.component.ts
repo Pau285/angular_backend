@@ -50,6 +50,7 @@ export class AdminComponent implements OnInit {
 
   confirmActivate(id) {
     Swal.fire({
+
       title: 'Estas seguro?',
       text: 'El producto se habilitara nuevamente',
       icon: 'warning',

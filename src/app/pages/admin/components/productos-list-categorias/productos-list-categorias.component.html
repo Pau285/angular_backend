@@ -12,6 +12,7 @@
         <th scope="col">Stock</th>
         <th scope="col">Categoria</th>
         <th scope="col">Estado</th>
+        <th scope="col">QR</th>
 
       </tr>
       </thead>
@@ -24,6 +25,7 @@
         <td>{{productos.p_stock}}</td>
         <td>{{productos.categorias_nombre}}</td>
         <td>{{productos.p_state}}</td>
+        <td><app-modal-qr [data] = "productos"></app-modal-qr></td>
       </tr>
 
       </tbody>
